@@ -1,139 +1,195 @@
-# Mneme World Generator
+# Mneme World Generator (MWG)
 
-A progressive web application for generating and managing fictional worlds, built with modern web technologies.
+A progressive web application for generating and managing fictional worlds (pretty grounded star systems), built with modern web technologies. This is meant for world builders or TTRPGers who want a proceedurally generated star system to adventure in like in Traveller and Cepheus Engine. 
+
+---
 
 ## 🚀 Tech Stack
-
-- **Frontend Framework**: React 19 with TypeScript
+- **Frontend Framework**: React 19 + TypeScript
 - **Build Tool**: Vite 7
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/) with Radix UI primitives
+- **UI Components**: shadcn/ui (Radix UI primitives)
 - **Styling**: Tailwind CSS v4 with custom theme tokens
 - **Routing**: React Router DOM v7
 - **Icons**: Lucide React
-- **Fonts**: Inter (sans-serif) & IBM Plex Mono (monospace)
+- **Fonts**: Inter (sans-serif), IBM Plex Mono (monospace)
 
-## 📋 Prerequisites
+---
 
-Before you begin, ensure you have the following installed:
+## ✅ Prerequisites (Corrected)
+> **Vite requirement**: Node.js **20.19+** or **22.12+**. We standardize on **Node 22 LTS**.
 
-- **Node.js**: v18 or higher
-- **npm**: v9 or higher (comes with Node.js)
+- **Node.js**: v22.12+ (recommended v22.20+)
+- **Package Manager**: `pnpm` (via Corepack) or `npm`
+- **Git**: latest stable
+
+---
+
+## 🧩 Install Node.js (Linux / macOS / Windows)
+Choose **one** method for your OS.
+
+### Linux (Ubuntu/Debian)
+```bash
+sudo apt purge -y nodejs npm 2>/dev/null || true
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 22
+nvm use 22
+corepack enable
+corepack prepare pnpm@latest --activate
+```
+
+### macOS
+```bash
+brew install node@22
+corepack enable
+corepack prepare pnpm@latest --activate
+```
+
+### Windows
+```powershell
+winget install OpenJS.NodeJS.LTS
+corepack enable
+corepack prepare pnpm@latest --activate
+```
+
+---
 
 ## 🛠️ Getting Started
 
-### 1. Clone the repository
-
+### 1) Clone the repository
 ```bash
 git clone https://github.com/StevenTiu22/mneme-world-generator-pwa.git
 cd mneme-world-generator-pwa
 ```
 
-### 2. Install dependencies
-
+### 2) Install dependencies
 ```bash
-npm install
+pnpm install
 ```
 
-### 3. Run the development server
-
+### 3) Run development server
 ```bash
-npm run dev
+pnpm dev
+```
+Visit `http://localhost:5173` or the network IP shown in the terminal.
+
+---
+
+## 🧪 Testing & Virtual Environment
+Run a local test instance for live updates and debugging.
+```bash
+pnpm dev
+```
+Then, open `http://localhost:5173` in a browser.
+
+You can also test on your phone (same Wi-Fi): open `http://<your-LAN-IP>:5173`.
+
+---
+
+## 📦 Build for Deployment
+```bash
+pnpm build
+```
+This generates an optimized `dist/` folder.
+
+To preview the build locally:
+```bash
+pnpm preview
 ```
 
-The application will be available at `http://localhost:5173`
+---
 
-## 📦 Available Scripts
+## 📱 Export to Phone or Tablet
+1. Build the app (`pnpm build`)
+2. Zip the `dist/` folder
+3. Transfer to your device (via USB, AirDrop, or cloud)
+4. Run a local HTTP server:
+   ```bash
+   python3 -m http.server 8000
+   ```
+5. Open `http://127.0.0.1:8000` and choose **Add to Home Screen**.
 
-- `npm run dev` - Start the development server with hot reload
-- `npm run build` - Build the production-ready application
-- `npm run preview` - Preview the production build locally
-- `npm run lint` - Run ESLint to check code quality
+This installs the app as a PWA on your phone.
 
-## 🎨 Project Structure
+---
 
+## 🔄 Updating the App
+Whenever an update is released:
+1. Pull the latest code:
+   ```bash
+   git pull origin main
+   ```
+2. Reinstall dependencies:
+   ```bash
+   pnpm install
+   ```
+3. Rebuild the app:
+   ```bash
+   pnpm build
+   ```
+4. Redeploy or retransfer the updated `dist/` folder to your phone or server.
+
+---
+
+## 🧱 Docker Hosting (optional)
+```bash
+docker run -d --name mwg -p 8080:80 -v "$(pwd)/dist:/usr/share/nginx/html:ro" nginx:alpine
 ```
-mneme-world-generator-pwa/
-├── public/              # Static assets
-├── src/
-│   ├── assets/         # Images, logos, and media files
-│   ├── components/     # React components
-│   │   ├── layout/    # Layout components (MainLayout, CenteredLayout)
-│   │   ├── shared/    # Shared components (Header, Footer)
-│   │   └── ui/        # shadcn/ui components (Button, Card, etc.)
-│   ├── lib/           # Utility functions
-│   ├── pages/         # Page components (Home, CreateNew, etc.)
-│   ├── App.tsx        # Root application component
-│   ├── routes.tsx     # React Router configuration
-│   ├── main.tsx       # Application entry point
-│   └── index.css      # Global styles and Tailwind configuration
-├── components.json     # shadcn/ui configuration
-├── tailwind.config.js  # Tailwind CSS configuration
-└── vite.config.ts     # Vite configuration
-```
+Then access via `http://localhost:8080`.
 
-## 🎯 Features
-
-- **World Generation**: Create custom worlds with detailed parameters
-- **Dark/Light Theme**: Toggle between dark and light modes with persistent preference
-- **Responsive Design**: Optimized for desktop and mobile devices
-- **Type-Safe**: Full TypeScript support for better developer experience
-- **Modern UI**: Beautiful, accessible components built with shadcn/ui
+---
 
 ## 🧩 Adding shadcn/ui Components
-
-To add new shadcn/ui components to the project:
-
 ```bash
-npx shadcn@latest add [component-name]
+npx shadcn@latest add <component-name>
 ```
-
 Example:
-
 ```bash
 npx shadcn@latest add dialog
 ```
 
-## 🎨 Theme Customization
+---
 
-The application uses CSS variables for theming. You can customize colors in `src/index.css`:
-
-- Light mode colors are defined in `:root`
-- Dark mode colors are defined in `.dark`
-- Theme tokens include: `background`, `foreground`, `primary`, `secondary`, `accent`, `muted`, etc.
-
-## 🌐 Routing
-
-The application uses React Router DOM for navigation. Routes are defined in `src/routes.tsx`:
-
-- `/` - Home page
-- `/create-new` - World creation selection
-- `/create-new/custom` - Custom world creation (Primary Star configuration)
-- `/my-worlds` - User's saved worlds (coming soon)
-
-## 📝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 👤 Author
-
-**Justin Cesar Aquino**
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🔗 Links
-
-- [shadcn/ui Documentation](https://ui.shadcn.com/)
-- [React Documentation](https://react.dev/)
-- [Vite Documentation](https://vitejs.dev/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/)
-- [React Router Documentation](https://reactrouter.com/)
+## 🧭 Project Structure
+```
+mneme-world-generator-pwa/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── layout/
+│   │   ├── shared/
+│   │   └── ui/
+│   ├── lib/
+│   ├── pages/
+│   ├── App.tsx
+│   ├── routes.tsx
+│   ├── main.tsx
+│   └── index.css
+├── tailwind.config.js
+└── vite.config.ts
+```
 
 ---
 
-Built with ❤️ using React, TypeScript, and Vite
+## 🧪 Troubleshooting
+- **Vite not found** → Run `pnpm install` again.
+- **crypto.hash error** → Upgrade Node to 22, reinstall.
+- **LAN not reachable** → Check firewall or subnet.
+
+---
+
+## 👤 Author
+**Steven Tiu** — Author  
+**Justin Cesar Aquino** — Project Sponsor
+
+---
+
+## 📄 License
+This project is licensed under the **GNU General Public License v3 (GPL-3.0)**.
+
+You are free to use, modify, and distribute this software, provided that all derived works remain open source under the same license.
+
+---
+
+Built with ❤️ using React, TypeScript, and Vite.
